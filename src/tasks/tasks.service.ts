@@ -44,4 +44,11 @@ export class TasksService {
         if(index > -1) this.tasks.splice(index);
     }
 
+    patchTaskById(id: string, taskStatus: TaskStatus) : Task {
+        const task : Task = this.getTaskById(id);
+        task.status = taskStatus;
+        return task;
+
+    }
+
 }
