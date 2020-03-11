@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch, Query, Res, HttpStatus } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { FilterTaskDto } from './dto/filter-task.dto';
+import { Response } from 'express';
 
 @Controller('tasks')
 export class TasksController {
@@ -19,6 +20,12 @@ export class TasksController {
             return this.taskService.getAllTasks();
         }
         
+    }
+
+    @Get('/count')
+    getTaskCount(@Res() res: Response) : any {
+        //console.log(response);
+        return res.status(201).send(this.taskService.getAllTasks().length.toString());
     }
 
     @Post()
