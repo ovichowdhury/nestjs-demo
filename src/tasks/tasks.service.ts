@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import * as uuid from 'uuid/v1';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -52,13 +52,20 @@ export class TasksService {
     }
 
     getTaskById(id: string) : Task {
-        return this.tasks.find(task => task.id === id);
+        const task: Task =  this.tasks.find(task => task.id === id);
+        if(!task) {
+            throw new NotFoundException(`${id} Task not found`);
+        }
+        else {
+            return task;
+        }
 
     }
 
     deleteTaskById(id: string) {
         const index: number = this.tasks.findIndex(t => t.id === id);
         if(index > -1) this.tasks.splice(index);
+        else throw new NotFoundException(`${id} Task not found`);
     }
 
     patchTaskById(id: string, taskStatus: TaskStatus) : Task {
