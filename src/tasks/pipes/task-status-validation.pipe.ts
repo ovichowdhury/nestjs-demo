@@ -8,6 +8,7 @@ export class TaskStatusValidationPipe implements PipeTransform {
     TaskStatus.OPEN,
     TaskStatus.DONE
   ]
+  
   transform(value: any, metadata: ArgumentMetadata) {
     const index = this.allowedStatus.indexOf(value.toUpperCase());
     if(index > -1)
